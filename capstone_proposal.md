@@ -7,14 +7,14 @@
 
 4. In brief, my approach to creating the project would be as follows:
 
-  1. Database Schema: The database schema will include tables to store user profiles, plant information, and favorite plants associated with user accounts.
+  - Database Schema: The database schema will include tables to store user profiles, plant information, and favorite plants associated with user accounts.
 
-  2. API Issues: Potential issues with the API could include ensuring its reliability, availability, and the accuracy of the plant data it provides.
+  - API Issues: Potential issues with the API could include ensuring its reliability, availability, and the accuracy of the plant data it provides.
 
-  3. Sensitive Information: I need to take necessary measures to secure sensitive user information, such as passwords, to protect user privacy using bcrypt
+  - Sensitive Information: I need to take necessary measures to secure sensitive user information, such as passwords, to protect user privacy using bcrypt
 
-  4. Functionality: The app will include essential features like user registration and login, plant search functionality, displaying detailed plant information and needs, allowing users to save favorite plants, and setting watering reminders.
+  - Functionality: The app will include essential features like user registration and login, plant search functionality, displaying detailed plant information and needs, allowing users to save favorite plants, and setting watering reminders.
 
-  5. User Flow: Users will begin by either registering or logging into their accounts. They can then search for plants, view comprehensive plant information, save their favorite plants to their profile, and set watering reminders as needed.
+  - User Flow: Users will begin by either registering or logging into their accounts. They can then search for plants, view comprehensive plant information, save their favorite plants to their profile, and set watering reminders as needed.
 
-  6. Additional Features and Stretch Goals: My website will go beyond basic CRUD operations by offering plant-specific information, user authentication, the ability to save favorites, and setting reminders. Stretch goals could include incorporating social features like plant sharing, a community forum for plant enthusiasts, or personalized plant care recommendations.
+  - Additional Features and Stretch Goals: My website will go beyond basic CRUD operations by offering plant-specific information, user authentication, the ability to save favorites, and setting reminders. Stretch goals could include incorporating social features like plant sharing, a community forum for plant enthusiasts, or personalized plant care recommendations.
