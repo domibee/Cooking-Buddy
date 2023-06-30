@@ -1,3 +1,4 @@
+# PlantPal
 
 1. The goal of my website will be to provide valuable information about various plants, including their specific needs for humidity, lighting, and watering, to plant enthusiasts, particularly beginners. Additionally, it will include features such as a login system to save favorite plants and provide reminders for watering.
 
