@@ -1,21 +1,56 @@
 # PlantPal
 
-1. The goal of my website will be to provide valuable information about various plants, including their specific needs for humidity, lighting, and watering, to plant enthusiasts, particularly beginners. Additionally, it will include features such as a login system to save favorite plants and provide reminders for watering.
+## Goal: 
+ To provide valuable information about various plants, including specific needs for lighting and watering
 
-2. The kind of users who will visit my site would be plant enthusiasts, specifically targeting those who are new to plant care and cultivation.
+## Target Users: 
+ Plant enthusiasts, specifically targeting those who are new to plant care and cultivation
 
-3. As for the data I plan on using, I would like to utilize an API [the Perenual API](https://perenual.com/docs/api) that contains comprehensive information about plants, including explanations, humidity, lighting, and watering needs.
+## API: 
+ [The Perenual API](https://perenual.com/docs/api)
+ 
+## Approach:
+#### Database Schema: 
+Registered users will be stored in the database. Login authentication information and data for saved plants will be stored for eachc user with Objection Relational Mapping(ORM).
 
-4. In brief, my approach to creating the project would be as follows:
+| User |         
+| -----|          
+|  id   |        
+| username| 
+|password|
 
-  - Database Schema: The database schema will include tables to store user profiles, plant information, and favorite plants associated with user accounts.
+|Plant|
+|-----|
+|id|
+|plant_name|
+|watering|
+|sunlight|
 
-  - API Issues: Potential issues with the API could include ensuring its reliability, availability, and the accuracy of the plant data it provides.
+|User Plant Favorites|
+|-----|
+|id|
+|user_id|
+|plant_id|
 
-  - Sensitive Information: I need to take necessary measures to secure sensitive user information, such as passwords, to protect user privacy using bcrypt
+#### Potential API Problems: 
+As we're relying on data from an external API, there is a possibility of the API no longer being available and diseappearing. 
 
-  - Functionality: The app will include essential features like user registration and login, plant search functionality, displaying detailed plant information and needs, allowing users to save favorite plants, and setting watering reminders.
+#### Sensitive Information: 
+Encryption will be used to secure sensitive user information, such as passwords, to protect user privacy.
 
-  - User Flow: Users will begin by either registering or logging into their accounts. They can then search for plants, view comprehensive plant information, save their favorite plants to their profile, and set watering reminders as needed.
+#### Functionality: 
+1. User registration and login
+2. Plant search functionality
+3. Displaying detailed plant information and needs
+4. Plant favoriting functionality for registered users
+5. Watering reminders
 
-  - Additional Features and Stretch Goals: My website will go beyond basic CRUD operations by offering plant-specific information, user authentication, the ability to save favorites, and setting reminders. Stretch goals could include incorporating social features like plant sharing, a community forum for plant enthusiasts, or personalized plant care recommendations.
+#### User Flow: 
+1. Users will either registering or logging into their account
+2. Search for plants
+3. View comprehensive plant information
+4. Registered users can save favorite plants to their profile
+5. Set watering reminders
+
+#### Additional Features: 
+Incorporating social features like plant sharing, a community forum for plant enthusiasts, or personalized plant care recommendations.
