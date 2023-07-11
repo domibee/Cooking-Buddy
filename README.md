@@ -4,4 +4,4 @@
 
 Database Schema: 
 
-![PlantPal](https://github.com/domibee/PlantPal/assets/101384668/3899e08e-f38c-42ee-b217-b1e9e93d7efd)
+![PlantPal (1)](https://github.com/domibee/PlantPal/assets/101384668/9914e0ed-264e-49d1-bd54-3d713e9b4dca)
