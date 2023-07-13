@@ -13,24 +13,8 @@
 #### Database Schema: 
 Registered users will be stored in the database. Login authentication information and data for saved plants will be stored for eachc user with Objection Relational Mapping(ORM).
 
-| User |         
-| -----|          
-|  id   |        
-| username| 
-|password|
+![PlantPal (1)](https://github.com/domibee/PlantPal/assets/101384668/866d920c-de1d-475d-acac-a3f69b20f80c)
 
-|Plant|
-|-----|
-|id|
-|plant_name|
-|watering|
-|sunlight|
-
-|User Plant Favorites|
-|-----|
-|id|
-|user_id|
-|plant_id|
 
 #### Potential API Problems: 
 As we're relying on data from an external API, there is a possibility of the API no longer being available and diseappearing. 
