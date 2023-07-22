@@ -1,0 +1,37 @@
+
+/* ===================Nav==================== */
+.navbar {
+    background-color: #9d80de;
+    height: 46px;
+    border-bottom: 1px solid rgba(241, 0, 0, 0.25);
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 9999;
+  }
+  
+  .navbar a {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #ba8a18;
+  }
+
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+.form-container {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 400px;
+  }
