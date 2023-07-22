@@ -16,7 +16,7 @@ API_KEY = "ac045d2e287c43db9ee60e514bfa0d9d"
 app = Flask(__name__)
 app.app_context().push()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///plantpal'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cookingbuddy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
@@ -25,12 +25,19 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 db.create_all()
-
+############################
+#Homepage and error page
 @app.route('/')
 def index():
     """Show homepage"""
 
     return redirect ('/search')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """404 NOT FOUND PAGE"""
+
+    return render_template('404.html'), 404
 ##################################################################
 #Registration and login routes:
 @app.route('/user/register', methods = ['GET', 'POST'])
@@ -107,7 +114,7 @@ def search():
             flash('Failed to fetch recipe data from API', 'error')
             return redirect('/search') #redirect to search page on error
         
-        return render_template('/recipes/search_results.html', search_results = search_results)
+        return render_template('/recipes/search_results.html', search_query = search_query, search_results = search_results)
     
     return render_template('search.html', form = form)
             
@@ -127,7 +134,7 @@ def show_recipe(id):
                 "title": data["title"],
                 "image": data.get("image"),
                 "extendedIngredients":data.get("extendedIngredients"),
-                "instructions": data.get("instructions"),
+                "instructions": data.get("analyzedInstructions"),
                 "sourceUrl": data.get("sourceUrl")
             }
     else:
@@ -138,4 +145,3 @@ def show_recipe(id):
     return render_template('/recipes/show_recipe.html', recipe_info = recipe_info)
 
 
-    
