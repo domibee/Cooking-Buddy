@@ -4,4 +4,4 @@
 
 Database Schema: 
 
-![Cooking Buddy Dataqbase](CookingBuddy.png)
+![Cooking Buddy Database](https://dbdiagram.io/d/64ace75c02bd1c4a5ed89b2f)
