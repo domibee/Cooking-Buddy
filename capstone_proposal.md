@@ -13,7 +13,7 @@ Cooking enthusiasts, food lovers, and anyone looking for new and exciting recipe
 #### Database Schema: 
 Registered users will be stored in the database. Login authentication information and data for saved recipes will be stored for each user using Object-Relational Mapping (ORM).
 
-![Cooking Buddy Dataqbase](/Users/work/Desktop/PlantPal/Cooking Buddy.png)
+![Cooking Buddy Dataqbase](CookingBuddy.png)
 
 #### Potential API Problems: 
 As we're relying on data from an external API, there is a possibility of the API no longer being available. We should have proper error handling in place to handle such situations gracefully. 

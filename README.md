@@ -4,4 +4,4 @@
 
 Database Schema: 
 
-![Cooking Buddy Dataqbase](/Users/work/Desktop/PlantPal/Cooking Buddy.png)
+![Cooking Buddy Dataqbase](CookingBuddy.png)
