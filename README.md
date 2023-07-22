@@ -1,7 +1,7 @@
 # PlantPal
 
-## API: [The Perenual](https://perenual.com/docs/api) : Plant List
+## API: [Spoonacular API](https://spoonacular.com/food-api/docs)
 
 Database Schema: 
 
-![PlantPal (1)](https://github.com/domibee/PlantPal/assets/101384668/9914e0ed-264e-49d1-bd54-3d713e9b4dca)
+![Cooking Buddy Dataqbase](/Users/work/Desktop/PlantPal/Cooking Buddy.png)
