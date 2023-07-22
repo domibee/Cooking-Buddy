@@ -90,6 +90,18 @@ def logout():
     session.pop('user_id')
     flash("Goodbye!", "info")
     return redirect('/')
+
+
+#####################################
+#General user routes:
+
+@app.route('/user/<int:user_id>')
+def show_user(user_id):
+    """Show user profile"""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('/user/profile.html')
 #####################################
 # Search bar    
 @app.route('/search', methods = ["GET","POST"])
