@@ -1,0 +1,11 @@
+<!-- search.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Search</h1>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.search_query.label }} {{ form.search_query(size=20) }}
+    <button class="btn btn-primary btn-block btn-lg">Search</button>
+  </form>
+{% endblock %}

@@ -1,40 +1,43 @@
-# PlantPal
+# Cooking Buddy
 
 ## Goal: 
- To provide valuable information about various plants, including specific needs for lighting and watering
+Cooking Buddy is a web application that provides valuable information about various recipes, cooking instructions, and ingredients. It utilizes the Spoonacular API to fetch recipe data and display it to users.
 
 ## Target Users: 
- Plant enthusiasts, specifically targeting those who are new to plant care and cultivation
+Cooking enthusiasts, food lovers, and anyone looking for new and exciting recipes to try out in the kitchen.
 
 ## API: 
- [The Perenual API](https://perenual.com/docs/api)
+ [Spoonacular API](https://spoonacular.com/food-api/docs)
  
 ## Approach:
 #### Database Schema: 
-Registered users will be stored in the database. Login authentication information and data for saved plants will be stored for eachc user with Objection Relational Mapping(ORM).
+Registered users will be stored in the database. Login authentication information and data for saved recipes will be stored for each user using Object-Relational Mapping (ORM).
 
-![PlantPal (1)](https://github.com/domibee/PlantPal/assets/101384668/866d920c-de1d-475d-acac-a3f69b20f80c)
-
+![Cooking Buddy Dataqbase](/Users/work/Desktop/PlantPal/Cooking Buddy.png)
 
 #### Potential API Problems: 
-As we're relying on data from an external API, there is a possibility of the API no longer being available and diseappearing. 
+As we're relying on data from an external API, there is a possibility of the API no longer being available. We should have proper error handling in place to handle such situations gracefully. 
 
 #### Sensitive Information: 
 Encryption will be used to secure sensitive user information, such as passwords, to protect user privacy.
 
-#### Functionality: 
+### Functionality:
 1. User registration and login
-2. Plant search functionality
-3. Displaying detailed plant information and needs
-4. Plant favoriting functionality for registered users
-5. Watering reminders
+2. Recipe search functionality
+3. Displaying detailed recipe information, including ingredients and instructions
+4. Recipe favoriting functionality for registered users
 
-#### User Flow: 
-1. Users will either registering or logging into their account
-2. Search for plants
-3. View comprehensive plant information
-4. Registered users can save favorite plants to their profile
-5. Set watering reminders
+### User Flow:
+1. Users will either register or log into their account.
+2. Search for recipes based on keywords, ingredients, or categories.
+3. View comprehensive recipe information, including ingredients and instructions.
+4. Registered users can save favorite recipes to their profile.
 
-#### Additional Features: 
-Incorporating social features like plant sharing, a community forum for plant enthusiasts, or personalized plant care recommendations.
+### Additional Features:
+1. **Cooking Timer:** Users can set cooking timers for each recipe to help them stay organized while cooking.
+2. **Meal Planning:** Implement a meal planning feature where users can save recipes for different meals throughout the week.
+3. **Recipe Sharing:** Allow users to share their favorite recipes with others via email or social media.
+4. **Rating and Reviews:** Add a rating and review system, enabling users to provide feedback on recipes they've tried.
+5. **Cooking Tips:** Include cooking tips and tricks for specific recipes or ingredients to help users improve their cooking skills.
+
+By incorporating these features, Cooking Buddy can become a comprehensive and user-friendly web application for cooking enthusiasts to discover and explore new recipes while enhancing their culinary experiences.

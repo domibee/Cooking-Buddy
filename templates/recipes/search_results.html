@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Search Results for </h1>
+  {% if search_results %}
+    <ul>
+      {% for results in search_results %}
+        <li>
+          Recipe Name: <a href = "{{ url_for('show_recipe', id=results.id) }}"> {{ results.title }} </a> <br>
+          
+          {% if results.image %}
+            Default Image: <img src = "{{ results.image }}" alt = "Dish Image">
+
+          {% else %}
+            No image available.
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+{% endblock %}

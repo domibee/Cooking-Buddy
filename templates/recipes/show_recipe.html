@@ -1,0 +1,26 @@
+<!-- recipe.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ recipe_info.title }}</h1>
+
+  {% if recipe_info.image %}
+    <img src="{{ recipe_info.image }}" alt="Dish Image">
+  {% else %}
+    No image available.
+  {% endif %}
+  {% if recipe_info.extendedIngredients %}
+  <p>Ingredients:</p>
+  <ul>
+    {% for ingredient in recipe_info.extendedIngredients %}
+      <li>{{ ingredient.original }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No extended ingredients found.</p>
+{% endif %}
+  <h2>Instructions:</h2>
+  <p>{{ recipe_info.instructions }}</p>
+  
+  <p><a href="{{ recipe_info.sourceUrl }}" target="_blank">View Full Recipe</a></p>
+{% endblock %}
