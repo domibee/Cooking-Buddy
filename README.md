@@ -4,4 +4,4 @@
 
 Database Schema: 
 
-![Cooking Buddy Database](https://dbdiagram.io/d/64ace75c02bd1c4a5ed89b2f)
+![PlantPal (1)](https://github.com/domibee/Cooking-Buddy/blob/main/Cooking%20Buddy.png)

@@ -13,7 +13,7 @@ Cooking enthusiasts, food lovers, and anyone looking for new and exciting recipe
 #### Database Schema: 
 Registered users will be stored in the database. Login authentication information and data for saved recipes will be stored for each user using Object-Relational Mapping (ORM).
 
-![Cooking Buddy Database](https://dbdiagram.io/d/64ace75c02bd1c4a5ed89b2f)
+![Cooking Buddy Database](https://github.com/domibee/Cooking-Buddy/blob/main/Cooking%20Buddy.png)
 
 #### Potential API Problems: 
 As we're relying on data from an external API, there is a possibility of the API no longer being available. We should have proper error handling in place to handle such situations gracefully. 
