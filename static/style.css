@@ -1,37 +1,46 @@
 
 /* ===================Nav==================== */
-.navbar {
-    background-color: #9d80de;
+.navbar { 
+    background-color: #9873c0;
     height: 46px;
-    border-bottom: 1px solid rgba(241, 0, 0, 0.25);
     margin-bottom: 1rem;
     position: relative;
     z-index: 9999;
   }
-  
-  .navbar a {
+
+.navbar-shadow {
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+}
+.navbar a {
   color: #ffffff;
   font-size: 17px;
   font-weight: bold;
 }
 
-.navbar a:hover {
-    color: #ba8a18;
-  }
 
-
-form {
+/* styles.css */
+.center-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
+    justify-content: center;
+    height: 40vh; /* This will center the content vertically on the page */
+}
   
-.form-container {
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    max-width: 400px;
-  }
+  /* Optional: Add some spacing between the logo and search bar */
+img {
+    margin-bottom: 20px;
+}
+  
+.search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+}
+  
+.btn {
+    background-color: grey;
+    border: lavender;
+}
+
