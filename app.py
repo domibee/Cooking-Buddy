@@ -1,13 +1,13 @@
 import os 
 
-from flask import Flask, jsonify, request, render_template, session, g, flash, redirect
-import requests, urllib.request, json
+from flask import Flask, jsonify, render_template, session, g, flash, redirect
+import requests
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
 from models import db, connect_db, User
 from forms import UserForm, SearchForm
-
+CURR_USER_KEY = "curr_user"
 
 #The test API KEY is 1 which is provided for developers for are using it for educational use
 API_URL_BASE = "https://api.spoonacular.com"
@@ -25,6 +25,98 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 db.create_all()
+
+
+##################################################################
+#Registration and login routes:
+
+#decorator that will run before any view function route and is used for tasks that need to be executed on every request
+
+@app.before_request
+def add_user_to_g():
+    """If we're loggin in m add curr_user to Flask global"""
+
+    if CURR_USER_KEY in session:
+        g.user = User.query.get(session[CURR_USER_KEY])
+
+    else:
+        g.user = None
+
+def do_login(user):
+    """Log in user"""
+
+    session[CURR_USER_KEY] = user.id
+
+def do_logout():
+    """Logout user"""
+
+    if CURR_USER_KEY in session:
+        del session[CURR_USER_KEY]
+
+
+@app.route('/user/register', methods = ['GET', 'POST'])
+def register():
+    """User Register Form
+    
+    Create new user and add to DB. Redirect to homepage.
+    
+    If for not valid, present form.
+    
+    If the user already exists with that username: flash message and re-present form"""
+
+    if CURR_USER_KEY in session:
+        del session[CURR_USER_KEY]
+
+    form = UserForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        try: 
+            new_user = User.register(username = username, password= password)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Registration successful', 'success')
+            return redirect('/user/login')
+        
+        ##Check if the username is already taken
+        except IntegrityError:
+            db.session.rollback()
+            flash("Username already taken", 'danger')
+            return render_template('/user/register.html', form = form)   
+    
+    else: 
+        return render_template('/user/register.html', form = form)
+    
+
+@app.route('/user/login', methods = ["GET", "POST"])
+def login():
+    """Handle user login"""
+    form = UserForm()
+
+    if form.validate_on_submit():
+        user = User.authenticate(form.username.data,
+                                 form.password.data)
+        
+        if user:
+            do_login(user)
+            flash(f"Welcome Back, {user.username}!", "primary")
+            return redirect('/search')
+        
+        flash("Invalid credentials.", 'danger')
+
+    return render_template('/user/login.html', form = form )
+
+@app.route('/logout')
+def logout():
+    """Handle logout of user"""
+    
+    do_logout()
+
+    flash("Goodbye!", "info")
+    return redirect('/')
+
 ############################
 #Homepage and error page
 @app.route('/')
@@ -38,59 +130,6 @@ def page_not_found(e):
     """404 NOT FOUND PAGE"""
 
     return render_template('404.html'), 404
-##################################################################
-#Registration and login routes:
-@app.route('/user/register', methods = ['GET', 'POST'])
-def register():
-    """User Register Form"""
-
-    form = UserForm()
-
-    if form.validate_on_submit():
-        username = form.username.data,
-        password = form.password.data
-
-        try: 
-            new_user = User.register(username = username, password= password)
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Registration successful', 'success')
-            return redirect('/login')
-        
-        ##Check if the username is already taken
-        except IntegrityError:
-            db.session.rollback()
-            flash("Username already taken", 'danger')
-            return render_template('/user/register.html', form = form)   
-
-    return render_template('/user/register.html', form = form)
-    
-
-@app.route('/user/login', methods = ["GET", "POST"])
-def login():
-    """Handle user login"""
-    form = UserForm()
-
-    if form.validate_on_submit():
-        user = User.authenticate(form.username.data,
-                                 form.password.data)
-        
-        if user:
-            flash(f"Welcome Back, {user.username}!", "primary")
-            session['user_id'] = user.id
-            return redirect('/search')
-        else:
-            form.username.errors = ['Invalid username/password']
-
-    return render_template('/user/login.html', form = form )
-
-@app.route('/logout')
-def logout():
-    """Handle logout of user"""
-    session.pop('user_id')
-    flash("Goodbye!", "info")
-    return redirect('/')
-
 
 #####################################
 #General user routes:
@@ -101,7 +140,7 @@ def show_user(user_id):
 
     user = User.query.get_or_404(user_id)
 
-    return render_template('/user/profile.html')
+    return render_template('/user/profile.html', user = user)
 #####################################
 # Search bar    
 @app.route('/search', methods = ["GET","POST"])
@@ -157,3 +196,12 @@ def show_recipe(id):
     return render_template('/recipes/show_recipe.html', recipe_info = recipe_info)
 
 
+@app.route('/recipes/<int:id>/favorite', methods = ['POST'])
+def add_favorite():
+    """Toggle a favorited recipe for the currently-logged-in user"""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect('/')
+    
+    
