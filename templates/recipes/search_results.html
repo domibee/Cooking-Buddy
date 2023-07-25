@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Search Results for </h1>
+  <h1>Search Results for "{{ search_query }}"</h1>
   {% if search_results %}
     <ul>
       {% for results in search_results %}
@@ -10,7 +10,15 @@
           
           {% if results.image %}
             Default Image: <img src = "{{ results.image }}" alt = "Dish Image">
-
+            <form method="POST" action="/messages/{{ msg.id }}/like" class="messages-like">
+            <button class="
+              btn 
+              btn-sm 
+              {{'btn-primary' if msg.id in likes else 'btn-secondary'}}"
+            >
+              <i class="fa fa-thumbs-up"></i> 
+            </button>
+          </form>
           {% else %}
             No image available.
           {% endif %}

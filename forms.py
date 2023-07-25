@@ -7,6 +7,6 @@ class UserForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
     
 class SearchForm(FlaskForm):
-    search_query = StringField('Search', validators= [DataRequired()])
+    search_query = StringField('', validators= [DataRequired()])
     
 
