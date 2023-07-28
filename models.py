@@ -14,6 +14,9 @@ def connect_db(app):
     db.app = app 
     db.init_app(app)
 
+
+DEFAULT_IMAGE = "/static/default_image.png"
+
 class User(db.Model):
     
     __tablename__ = "users"
@@ -21,7 +24,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     username = db.Column(db.String(50), unique = True)
     password = db.Column(db.String(100))
-    
+    display_name = db.Column(db.String(50))
+    img_url = db.Column(db.String(200), default = DEFAULT_IMAGE)
+
     def __repr__(self):
         return f"<User {self.username}>"
 
@@ -57,4 +62,33 @@ class User(db.Model):
 
         return False
 
+class Recipe(db.Model):
+    """Recipe Model."""
+
+    __tablename__ = "recipes"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(), nullable=False)
+    default_image= db.Column(db.String())
+    ingredients = db.Column(db.String())
+    instructions = db.Column(db.String())
+    
+
+    # Define the relationship with UserFavorite model
+    favorites = db.relationship('UserFavorite', backref='recipe')
+
+
+class UserFavorite(db.Model):
+    """Favorites Recipes of User"""
+
+    __tablename__= "favorites"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), nullable=False)
 

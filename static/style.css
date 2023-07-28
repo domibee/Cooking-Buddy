@@ -9,7 +9,10 @@
   }
 
 .navbar-shadow {
-    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+}
+.navbar-brand {
+  margin-left: 10px;
 }
 .navbar a {
   color: #ffffff;
@@ -17,8 +20,12 @@
   font-weight: bold;
 }
 
+.nav-item {
+  margin-right: 10px;
+  padding-right: 10px;
+}
 
-/* styles.css */
+/* ===================Search Bar==================== */
 .center-container {
     display: flex;
     flex-direction: column;
@@ -44,3 +51,26 @@ img {
     border: lavender;
 }
 
+/* ================Recipes======================= */
+
+.recipe-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three columns of equal width */
+  gap: 20px; /* Gap between grid items */
+}
+
+.grid-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

@@ -10,13 +10,13 @@
           
           {% if results.image %}
             Default Image: <img src = "{{ results.image }}" alt = "Dish Image">
-            <form method="POST" action="/messages/{{ msg.id }}/like" class="messages-like">
+            <form method="POST" action="recipes/{{  results.id }}/favorite" class="favorite-recipe">
             <button class="
               btn 
-              btn-sm 
-              {{'btn-primary' if msg.id in likes else 'btn-secondary'}}"
-            >
-              <i class="fa fa-thumbs-up"></i> 
+              btn-sm
+              {{'btn-primary' if results.id in likes else 'btn-secondary'}} 
+              ">
+              <i class="fa fa-star"></i> 
             </button>
           </form>
           {% else %}

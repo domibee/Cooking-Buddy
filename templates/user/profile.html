@@ -4,6 +4,9 @@
 
 {% block content %}
 
- <h1>HELLO!</h1>
+<h1>User Profile</h1>
+<p>Username: {{ user.username }}</p>
+<p>Add an image: <img src ="/static/{{user.img_url}}"> </p>
+
 
 {% endblock %}
