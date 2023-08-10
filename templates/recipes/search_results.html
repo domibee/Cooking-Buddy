@@ -3,28 +3,31 @@
 {% block content %}
   <h1>Search Results for "{{ search_query }}"</h1>
   {% if search_results %}
-    <ul>
-      {% for results in search_results %}
-        <li>
-          Recipe Name: <a href = "{{ url_for('show_recipe', id=results.id) }}"> {{ results.title }} </a> <br>
-          
-          {% if results.image %}
-            Default Image: <img src = "{{ results.image }}" alt = "Dish Image">
-            <form method="POST" action="recipes/{{  results.id }}/favorite" class="favorite-recipe">
-            <button class="
-              btn 
-              btn-sm
-              {{'btn-primary' if results.id in likes else 'btn-secondary'}} 
-              ">
-              <i class="fa fa-star"></i> 
-            </button>
-          </form>
-          {% else %}
-            No image available.
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
+    <div class="recipe-container">
+      <ul class="no-bullets grid-container">
+        {% for results in search_results %}
+          <li>
+            <div class="grid-item">
+              Recipe Name: <a href="{{ url_for('show_recipe', id=results.id) }}"> {{ results.title }} </a> <br>
+             
+              <form method="POST" action="{{ url_for('add_favorite', id=results.id) }}" class="favorite-recipe">
+                {{ form.csrf_token }}
+                <button class="btn btn-sm {{'btn-primary' if results.recipe_id in favorites else 'btn-secondary'}}">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </button>
+            </form>
+              
+              {% if results.image %}
+                <img src="{{ results.image }}" alt="Dish Image">
+              {% else %}
+                No image available.
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    
   {% else %}
     <p>No results found.</p>
   {% endif %}
