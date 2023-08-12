@@ -1,6 +1,6 @@
-"""Models for PlantPal app."""
+"""Models for CookingBuddy app."""
 
-from flask_bcrypt import Bcrypt, generate_password_hash
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 bcrypt = Bcrypt()
@@ -27,16 +27,19 @@ class User(db.Model):
     display_name = db.Column(db.String(50))
     img_url = db.Column(db.String(200), default = DEFAULT_IMAGE)
 
+    favorites = db.relationship('Recipe', secondary='user_recipe_favorites', backref='users')
+
     def __repr__(self):
         return f"<User {self.username}>"
 
     @classmethod
-    def register(cls, username, password):
+    def register(cls, display_name, username, password):
         """Registers user. Hashes password and adds user to system"""
 
         hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
 
         user = User(
+            display_name = display_name,
             username = username,
             password = hashed_pwd
         )
@@ -67,12 +70,11 @@ class Recipe(db.Model):
 
     __tablename__ = "recipes"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    recipe_api_id = db.Column(db.Integer(), primary_key=True)
     title = db.Column(db.String(), nullable=False)
     default_image= db.Column(db.String())
     ingredients = db.Column(db.String())
     instructions = db.Column(db.String())
-    
 
     # Define the relationship with UserFavorite model
     favorites = db.relationship('UserFavorite', backref='recipe')
@@ -81,14 +83,12 @@ class Recipe(db.Model):
 class UserFavorite(db.Model):
     """Favorites Recipes of User"""
 
-    __tablename__= "favorites"
+    __tablename__= "user_recipe_favorites"
 
     id = db.Column(
         db.Integer,
         primary_key=True,
     )
-    
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_api_id', ondelete='CASCADE'), nullable=False)
 
