@@ -1,19 +1,14 @@
 <!-- recipe.html -->
 {% extends "base.html" %}
 
-{% block content %}
-  <div class="recipe-container">
-    <h1>{{ recipe_info.title }}</h1>
-
-    <div class="grid-container">
-      <div class="grid-item">
+{% block content %} 
+    <h1>{{ recipe_info.title }}</h1>  
         {% if recipe_info.image %}
           <img src="{{ recipe_info.image }}" alt="Dish Image">
         {% else %}
           No image available.
         {% endif %}
-      </div>
-      <div class="grid-item">
+
         {% if recipe_info.extendedIngredients %}
           <p>Ingredients:</p>
           <ul>
@@ -24,8 +19,7 @@
         {% else %}
           <p>No extended ingredients found.</p>
         {% endif %}
-      </div>
-      <div class="grid-item">
+
         {% if recipe_info.instructions %}
           <p>Preparation:</p>
           <ol>
@@ -35,9 +29,7 @@
           </ol>
         {% else %}
           <p>No instructions available.</p>
-        {% endif %}
-      </div>
-    </div>
-  </div>
+        {% endif %} 
   <p><a href="{{ recipe_info.sourceUrl }}" target="_blank">View Full Recipe</a></p>
 {% endblock %}
+

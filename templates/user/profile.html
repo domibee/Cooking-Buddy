@@ -5,8 +5,18 @@
 {% block content %}
 
 <h1>User Profile</h1>
-<p>Username: {{ user.username }}</p>
-<p>Add an image: <img src ="/static/{{user.img_url}}"> </p>
-
-
+<p>Username: {{ g.user.username }}</p>
+<p>Add an image: <img src="{{ url_for('static', filename = g.user.img_url) }}"></p>
+<p>Favorited Recipes:</p>
+<ul>
+    {% for favorited_recipe in user.favorites %}
+        {% if favorited_recipe %}
+            <li>
+                <a href="{{ url_for('show_recipe', recipe_api_id=favorited_recipe.recipe_api_id) }}">{{ favorited_recipe.title }}</a>
+            </li>
+        {% else %}
+            No favorites yet.
+        {% endif %}
+    {% endfor %}
+  </ul>
 {% endblock %}

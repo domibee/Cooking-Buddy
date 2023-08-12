@@ -51,6 +51,17 @@ img {
     border: lavender;
 }
 
+/* ===================Search Results==================== */
+
+.no-bullets {
+  list-style-type: none;
+}
+
+.grid-container{
+  border: none;
+}
+
+
 /* ================Recipes======================= */
 
 .recipe-container {
