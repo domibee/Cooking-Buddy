@@ -1,12 +1,11 @@
 import os 
 
-from flask import Flask, jsonify, render_template, session, g, flash, redirect
+from flask import Flask, jsonify, render_template, session, g, flash, redirect, request, url_for, abort
 import requests
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
-
 from models import db, connect_db, User, Recipe, UserFavorite
-from forms import UserForm, SearchForm
+from forms import UserForm,LoginForm, SearchForm
 CURR_USER_KEY = "curr_user"
 
 #The test API KEY is 1 which is provided for developers for are using it for educational use
@@ -15,7 +14,7 @@ API_KEY = "ac045d2e287c43db9ee60e514bfa0d9d"
 
 app = Flask(__name__)
 app.app_context().push()
-
+app.debug = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cookingbuddy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
@@ -26,6 +25,9 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 db.create_all()
+
+# Default setting
+pageLimit = 5
 
 
 ##################################################################
@@ -73,11 +75,12 @@ def register():
     form = UserForm()
 
     if form.validate_on_submit():
+        display_name = form.display_name.data
         username = form.username.data
         password = form.password.data
 
         try: 
-            new_user = User.register(username = username, password= password)
+            new_user = User.register(display_name = display_name, username = username, password= password)
             db.session.add(new_user)
             db.session.commit()
             flash('Registration successful', 'success')
@@ -96,7 +99,7 @@ def register():
 @app.route('/user/login', methods = ["GET", "POST"])
 def login():
     """Handle user login"""
-    form = UserForm()
+    form = LoginForm()
     
     if form.validate_on_submit():
         user = User.authenticate(form.username.data,
@@ -104,7 +107,7 @@ def login():
         
         if user:
             do_login(user)
-            flash(f"Welcome Back, {user.username}!", "primary")
+            flash(f"Welcome Back, {user.display_name}!", "primary")
             return redirect('/search')
         
         flash("Invalid username or password. Please double-check your login credentials and try again.", 'danger')
@@ -131,7 +134,7 @@ def index():
 @app.errorhandler(404)
 def page_not_found(e):
     """404 NOT FOUND PAGE"""
-
+    
     return render_template('404.html'), 404
 
 #####################################
@@ -142,12 +145,13 @@ def show_user(id):
     """Show user profile"""
 
     user = User.query.get_or_404(id)
+    favorited_recipe = user.favorites
     
-    return render_template('/user/profile.html', user = user)
+    return render_template('/user/profile.html', user = user, favorited_recipe = favorited_recipe)
 
 #####################################
 # Search bar    
-@app.route('/search', methods = ["GET","POST"])
+@app.route('/search&query=<str:search_query>', methods = ["GET","POST"])
 def search():
     """Show search bar for recipes"""
 
@@ -164,25 +168,43 @@ def search():
             data = response.json()
             search_results = data['results']
 
+            # Save the search results to the database
+            for result in search_results:
+                 # Check if the recipe already exists in the database
+                existing_recipe = Recipe.query.filter_by(recipe_api_id=result['id']).first()
+
+                # If the recipe already exists, skip adding it again
+                if existing_recipe:
+                    continue
+
+                recipe = Recipe(
+                    recipe_api_id = result.get('id'),
+                    title =result['title'],
+                    default_image =result.get('image', None),
+                    
+                )
+                db.session.add(recipe)
+            db.session.commit()
+            
         else:
             #Handle API error if needed
             flash('Sorry, we are experiencing some technical difficulties. Please try again later or contact support for assistance.', 'danger')
             return redirect('/search') #redirect to search page on error
         
-        return render_template('/recipes/search_results.html', search_query = search_query, search_results = search_results)
+        return render_template('/recipes/search_results.html', search_query = search_query, search_results = search_results, form = form)
     
     return render_template('search.html', form = form)
             
 
-@app.route('/recipes/<int:id>')
-def show_recipe(id):
+@app.route('/recipes/<int:recipe_api_id>')
+def show_recipe(recipe_api_id):
 
     """Show Recipe"""
 
-    url = f"https://api.spoonacular.com/recipes/{id}/information?apiKey={API_KEY}"
+    url = f"https://api.spoonacular.com/recipes/{recipe_api_id}/information?apiKey={API_KEY}"
 
     response = requests.get(url)
-    
+
     if response.status_code == 200:
             data = response.json()
             recipe_info = {
@@ -197,25 +219,46 @@ def show_recipe(id):
             flash('Failed to fetch recipe data from API', 'error')
             return redirect('/search') #redirect to search page on error
 
-    return render_template('/recipes/show_recipe.html', recipe_info = recipe_info)
+    return render_template('/recipes/show_recipe.html', recipe_info  = recipe_info)
 
 
-# @app.route('/recipes/<int:id>/favorite', methods = ['POST'])
-# def add_favorite( recipe_id):
-#     """Toggle a favorited recipe for the currently-logged-in user"""
+@app.route('/recipes/<int:recipe_api_id>/favorite', methods=['POST'])
+def add_favorite(recipe_api_id):
+    """Toggle a favorited recipe for the currently-logged-in user"""
 
-#     if not g.user:
-#         flash("Access unauthorized.", "danger")
-#         return redirect('/')
-    
-#     favorited_recipe = Recipe.query.get_or_404(recipe_id)
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect('/')
 
-#     # Check if the user has already favorited the recipe
-#     if favorited_recipe in g.user.favorites:
-#         g.user.favorites.remove(favorited_recipe) # Remove the favorite
-#     else:
-#         g.user.favorites.append(favorited_recipe) # Add the favorite
-    
-#     db.session.commit()
-#     return redirect("/")
+    favorited_recipe = Recipe.query.get_or_404(recipe_api_id)
+    # filter the user_id and recipe id from UserFavorite table
+    user_favorite = UserFavorite.query.filter_by(user_id=g.user.id, recipe_id=favorited_recipe.recipe_api_id).first()
+    if user_favorite:
+        db.session.delete(user_favorite)
+        db.session.commit()
+
+    else:
+        user_favorite = UserFavorite(user_id=g.user.id, recipe_id=favorited_recipe.recipe_api_id)
+        db.session.add(user_favorite)
+        db.session.commit()
+
+    return redirect(request.referrer)
+
+
+##############################################################################
+# Turn off all caching in Flask
+#   (useful for dev; in production, this kind of stuff is typically
+#   handled elsewhere)
+#
+# https://stackoverflow.com/questions/34066804/disabling-caching-in-flask
+
+@app.after_request
+def add_header(req):
+    """Add non-caching headers on every request."""
+
+    req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    req.headers["Pragma"] = "no-cache"
+    req.headers["Expires"] = "0"
+    req.headers['Cache-Control'] = 'public, max-age=0'
+    return req    
 

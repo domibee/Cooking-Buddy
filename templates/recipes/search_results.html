@@ -5,20 +5,21 @@
   {% if search_results %}
     <div class="recipe-container">
       <ul class="no-bullets grid-container">
-        {% for results in search_results %}
+        {% for result in search_results %}
           <li>
             <div class="grid-item">
-              Recipe Name: <a href="{{ url_for('show_recipe', id=results.id) }}"> {{ results.title }} </a> <br>
+              Recipe Name: <a href="{{ url_for('show_recipe', recipe_api_id=result['id']) }}"> {{ result['title'] }} </a> <br>
              
-              <form method="POST" action="{{ url_for('add_favorite', id=results.id) }}" class="favorite-recipe">
+              <form method="POST" action="{{ url_for('add_favorite', recipe_api_id=result['id']) }}" class="favorite-recipe">
                 {{ form.csrf_token }}
-                <button class="btn btn-sm {{'btn-primary' if results.recipe_id in favorites else 'btn-secondary'}}">
+                <button class="btn btn-sm {% if result['id'] in g.user.favorites %}btn-primary{% else %}btn-secondary{% endif %}">
                     <i class="fa fa-star" aria-hidden="true"></i>
+                    {% if result['id'] in g.user.favorites %} Remove from Favorites {% else %} Add to Favorites {% endif %}
                 </button>
-            </form>
-              
-              {% if results.image %}
-                <img src="{{ results.image }}" alt="Dish Image">
+              </form>
+            
+              {% if result.get('image') %}
+                <img src="{{ result['image'] }}" alt="Dish Image">
               {% else %}
                 No image available.
               {% endif %}
