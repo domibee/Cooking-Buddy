@@ -61,27 +61,55 @@ img {
   border: none;
 }
 
-
-/* ================Recipes======================= */
-
 .recipe-container {
-  max-width: 800px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 20px;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Three columns of equal width */
+  grid-template-columns: 1fr 1fr 1fr 1fr ; /* Three columns of equal width */
   gap: 20px; /* Gap between grid items */
 }
 
 .grid-item {
-  border: 1px solid #ccc;
+  border-color: grey;
   padding: 10px;
 }
 
 img {
   max-width: 100%;
   height: auto;
+}
+
+
+/* Style for the pagination container */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Style for pagination links */
+.pagination a {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 0 5px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Style for active pagination link */
+.pagination a.active {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+/* Hover effect for pagination links */
+.pagination a:hover {
+  background-color: #ddd;
 }
