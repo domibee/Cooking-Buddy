@@ -1,4 +1,4 @@
-# PlantPal
+# CookingBuddy
 
 ## API: [Spoonacular API](https://spoonacular.com/food-api/docs)
 
