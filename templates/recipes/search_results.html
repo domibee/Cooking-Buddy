@@ -9,11 +9,11 @@
           <li>
             <div class="grid-item">
               {% if result.get('image') %}
-                <img src="{{ result['image'] }}" alt="Dish Image">
+              <a href="{{ url_for('show_recipe', recipe_api_id=result['id']) }}" class="show_recipe_title"><img src="{{ result['image'] }}" class="recipe_thumb" alt="Dish Image"></a>
               {% else %}
                 No image available.
               {% endif %}
-              <a href="{{ url_for('show_recipe', recipe_api_id=result['id']) }}"> {{ result['title'] }} </a>
+              <a href="{{ url_for('show_recipe', recipe_api_id=result['id']) }}" class="show_recipe_title"> {{ result['title'] }} </a>
             </div>
           </li>
         {% endfor %}
