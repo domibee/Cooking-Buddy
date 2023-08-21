@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": "Python: Flask",
             "type": "python",
@@ -17,7 +18,7 @@
             "args": [
                 "run",
                 "--no-debugger",
-                
+                "reload"
             ],
             "jinja": true,
             "justMyCode": true

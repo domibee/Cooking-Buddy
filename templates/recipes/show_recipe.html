@@ -1,45 +1,60 @@
 <!-- recipe.html -->
 {% extends "base.html" %}
 
-{% block content %} 
-    <h1>{{ recipe_info.title }}</h1>  
-      <form method="POST" action="{{ url_for('add_favorite', recipe_api_id=recipe_api_id) }}" class="favorite-recipe">
-        <button class="btn btn-sm  {{'btn-primary' if is_favorite else 'btn-secondary'}}">
-          <i class="fa fa-star" aria-hidden="true"></i>
+{% block content %}
+  <div class = "recipe-container">
+    <form method="POST" action="{{ url_for('add_favorite', recipe_api_id=recipe_api_id) }}" class="favorite-recipe">
+        <button class= "favorite-btn btn btn-sm  {{'btn-primary' if is_favorite else 'btn-secondary'}}">
+        <i class="fa fa-star" aria-hidden="true"></i>
             {% if is_favorite  %} 
-              Remove from Favorites
+            Remove from Favorites
             {% else %} 
-              Add to Favorites 
+            Add to Favorites 
             {% endif %}
-          </button>
-        </form>
+        </button>
+    </form>
         {% if recipe_info.image %}
-          <img src="{{ recipe_info.image }}" alt="Dish Image">
+          <img src="{{ recipe_info.image }}" alt="Dish Image" class = "image-section">
         {% else %}
           No image available.
         {% endif %}
-
-        {% if recipe_info.extendedIngredients %}
-          <p>Ingredients:</p>
-          <ul>
-            {% for ingredient in recipe_info.extendedIngredients %}
-              <li>{{ ingredient.original }}</li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          <p>No extended ingredients found.</p>
-        {% endif %}
-
-        {% if recipe_info.instructions %}
-          <p>Preparation:</p>
-          <ol>
-            {% for step in recipe_info.instructions[0].steps %}
-              <li>{{ step.step }}</li>
-            {% endfor %}
-          </ol>
-        {% else %}
-          <p>No instructions available.</p>
-        {% endif %} 
+        <h1 class="recipe-title">{{ recipe_info.title }}</h1>  
+      <div class="recipe-content">
+        <div class = "container">
+          <div class = "row">
+            <div class="col">
+              {% if recipe_info.instructions %}
+                <p class="column-title">Preparation:</p>
+                <ol class = "recipe_preparation">
+                  {% for step in recipe_info.instructions[0].steps %}
+                    <li class="recipe-step">{{ step.step }}</li>
+                  {% endfor %}
+                </ol>
+              {% else %}
+                <p>No instructions available.</p>
+              {% endif %}
+            </div>
+            <div class="col">
+              {% if recipe_info.extendedIngredients %}
+                <p class="column-title">Ingredients:</p>
+                <ul class="recipe-ingredients">
+                  {% for ingredient in recipe_info.extendedIngredients %}
+                    <li>
+                      <label class="checkbox-label">
+                        <input type="checkbox" class="checkbox" name="ingredients" value="{{ ingredient.original }}">
+                        {{ ingredient.original }}
+                      </label>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No extended ingredients found.</p>
+              {% endif %}
+            </div>
+            
+        </div> 
+      </div> 
+  </div>
   <p><a href="{{ recipe_info.sourceUrl }}" target="_blank">View Full Recipe</a></p>
 {% endblock %}
 
