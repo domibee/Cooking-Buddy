@@ -4,19 +4,24 @@
 
 {% block content %}
 
-<h1>User Profile</h1>
-<p>Username: {{ g.user.username }}</p>
-<p>Add an image: <img src="{{ url_for('static', filename = g.user.img_url) }}"></p>
-<p>Favorited Recipes:</p>
-<ul>
-    {% for favorited_recipe in user.favorites %}
-        {% if favorited_recipe %}
+<h1 class="display-name">{{user.display_name}}'s Favorite Recipes</h1>
+
+<div class="recipe-container">
+    <ul class="no-bullets grid-container">
+        {% for favorited_recipe in user.favorites %}
             <li>
-                <a href="{{ url_for('show_recipe', recipe_api_id=favorited_recipe.recipe_api_id) }}">{{ favorited_recipe.title }}</a>
-            </li>
+                <div class="grid-item">
+                    {% if favorited_recipe.image %}
+                    <a href="{{ url_for('show_recipe', recipe_api_id=favorited_recipe.recipe_api_id) }}" class="show_recipe_title"><img src="{{ favorited_recipe.image }}" class="recipe_thumb" alt="Dish Image"></a>
+                    {% else %}
+                      No image available.
+                    {% endif %}  
+                    <a href="{{ url_for('show_recipe', recipe_api_id=favorited_recipe.recipe_api_id) }}">{{ favorited_recipe.title }}</a>
+                </div>
+            </li> 
         {% else %}
             No favorites yet.
-        {% endif %}
-    {% endfor %}
-  </ul>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
