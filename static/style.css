@@ -1,28 +1,43 @@
 
 /* ===================Nav==================== */
 .navbar { 
-    background-color: #9873c0;
-    height: 46px;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 9999;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid rgb(176, 176, 176) 1px;
+  height: 70px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 9999;
   }
 
-.navbar-shadow {
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-}
 .navbar-brand {
+  margin-top: 20px;
   margin-left: 10px;
-}
-.navbar a {
-  color: #ffffff;
-  font-size: 17px;
-  font-weight: bold;
+  width: 230px;
 }
 
 .nav-item {
   margin-right: 10px;
   padding-right: 10px;
+}
+
+.nav-btn {
+  color: rgb(255, 255, 255);
+  background-color: #6647d4;
+  text-align: center;
+  
+}
+
+.nav-btn:hover {
+  border: solid 1px #6647d4;
+}
+
+.nav-user a{
+  text-align: left;
+  font-size: 1.4rem;
+  color: #7253e2;
+  font-family: 'Montserrat', serif, arial;
+  font-weight: 600;
 }
 
 /* ===================Search Bar==================== */
@@ -35,20 +50,41 @@
 }
   
   /* Optional: Add some spacing between the logo and search bar */
-img {
-    margin-bottom: 20px;
+.homepage_logo {
+    margin-top: 200px;
+    height: 500px;
 }
-  
 .search-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 400px;
+  width: 100%;
+  max-width: 800px;
+}  
+/* Adjust size of Search Input */
+.form-control {
+  padding: 20px; /* Increase padding to make the input box taller */
+  font-size: 20px; /* Increase font size for better visibility */
+  border-radius: 5px 0 0 5px;
 }
-  
-.btn {
-    background-color: grey;
-    border: lavender;
+
+/* Style for Search Button */
+.search-btn {
+  border-radius: 0 5px 5px 0;
+  border: rgb(100, 21, 119);
+  color:#ffffff;
+  background-color: rgb(96, 20, 115);
+}
+.search-btn:hover{
+  border-radius: 0 5px 5px 0;
+  border: solid #af99ff;
+  background-color: #af99ff;
+}
+
+.input-group-text {
+  background-color: #e7c5fb;
+  border: none;
+}
+
+.input-group-text i {
+  color:#af99ff;
 }
 
 /* ===================Search Results==================== */
@@ -58,6 +94,9 @@ img {
 }
 
 .grid-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ; 
+  gap: 20px;
   border: none;
 }
 
@@ -65,24 +104,33 @@ img {
   max-width: 1600px;
   margin: 0 auto;
   padding: 20px;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr ; /* Three columns of equal width */
-  gap: 20px; /* Gap between grid items */
+  text-align: center;
 }
 
 .grid-item {
-  border-color: grey;
   padding: 10px;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+.recipe_thumb {
+  margin-bottom: 10px;
+  border-bottom: solid 5px rgb(189, 120, 206);
+  width: 100%;
+  background: no-repeat 50% 50%;
+  background-size: cover;
+  height: 231px;
+  max-height: 231px;
 }
 
+.show_recipe_title{
+  text-decoration: none;
+  font-size: 15px;
+  margin-top: 40px;
+  color: rgb(37, 37, 37);
+}
+.show_recipe_title:hover{
+  color:grey;
+  border-bottom:solid 1px grey;
+}
 
 /* Style for the pagination container */
 .pagination {
@@ -112,4 +160,96 @@ img {
 /* Hover effect for pagination links */
 .pagination a:hover {
   background-color: #ddd;
+}
+
+/* ===================Recipe Page==================== */
+
+
+.recipe-title {
+  color: #464444;
+  display: flex;
+  margin: 10px 0;
+}
+.favorite-btn {
+  display: flex;
+  justify-content: left;
+}
+.image-section {
+  background-color: #af99ff; /* Change to your desired color */
+  margin: 10px 0;
+  padding: 0 350px;/* Add some spacing around the image */
+}
+
+.column-title {
+  font-size: 35px;
+  display: flex;
+  margin-left: 20px;
+}
+
+/* Preparation Section */
+
+.recipe-step {
+  color: #808080;
+  font-size: 1.2rem;
+  line-height: 2;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding-left: 30px; 
+}
+
+/* Style for step numbers */
+
+.recipe-step::marker {
+  color: #606060;
+  font-weight: 600;
+  font-size: 1.5rem; 
+  margin-right: 10px; 
+}
+
+/* Ingredients Section */
+.column-title {
+  padding-left: 2.5rem;
+  margin-bottom: 30px;
+  min-height: 35px;
+}
+
+.recipe-ingredients {
+  list-style-type: none;
+  font-size: 1.2rem;
+  color: #2f2f2f;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 30px;
+  text-align: left;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  appearance: none; 
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border: 2px solid #af8ad8;
+  border-radius: 4px;
+  outline: none;
+}
+
+/* ===================User Page==================== */
+
+.display-name {
+  font-family: 'Montserrat', serif, arial;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+.fav-recipe-title {
+  font-family: 'Vollkorn', serif, arial;
+  font-weight: 600;
+  font-size: 30px;
 }
