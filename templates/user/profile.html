@@ -8,15 +8,15 @@
 
 <div class="recipe-container">
     <ul class="no-bullets grid-container">
-        {% for favorited_recipe in user.favorites %}
+        {% for recipe_info in favorited_recipes_info %}
             <li>
                 <div class="grid-item">
-                    {% if favorited_recipe.image %}
-                    <a href="{{ url_for('show_recipe', recipe_api_id=favorited_recipe.recipe_api_id) }}" class="show_recipe_title"><img src="{{ favorited_recipe.image }}" class="recipe_thumb" alt="Dish Image"></a>
+                    {% if recipe_info.image %}
+                    <a href="{{ url_for('show_recipe', recipe_api_id=recipe_info.recipe_api_id) }}"><img src="{{ recipe_info.image }}" class="recipe_thumb" alt="Dish Image"></a>
                     {% else %}
                       No image available.
                     {% endif %}  
-                    <a href="{{ url_for('show_recipe', recipe_api_id=favorited_recipe.recipe_api_id) }}">{{ favorited_recipe.title }}</a>
+                    <a href="{{ url_for('show_recipe', recipe_api_id=recipe_info.recipe_api_id) }}" class="show_recipe_title">{{ recipe_info.title }}</a>
                 </div>
             </li> 
         {% else %}

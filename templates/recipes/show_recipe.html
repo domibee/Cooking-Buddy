@@ -5,12 +5,12 @@
   <div class = "recipe-container">
     <form method="POST" action="{{ url_for('add_favorite', recipe_api_id=recipe_api_id) }}" class="favorite-recipe">
         <button class= "favorite-btn btn btn-sm  {{'btn-primary' if is_favorite else 'btn-secondary'}}">
-        <i class="fa fa-star" aria-hidden="true"></i>
-            {% if is_favorite  %} 
-            Remove from Favorites
-            {% else %} 
-            Add to Favorites 
-            {% endif %}
+          <i class="fa fa-star" aria-hidden="true"></i>
+              {% if is_favorite  %} 
+              Remove from Favorites
+              {% else %} 
+              Add to Favorites 
+              {% endif %}
         </button>
     </form>
         {% if recipe_info.image %}
