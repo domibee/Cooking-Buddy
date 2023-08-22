@@ -1,6 +1,6 @@
 import os 
 
-from flask import Flask, render_template, session, g, flash, redirect, request, url_for
+from flask import Flask, jsonify, render_template, session, g, flash, redirect, request, url_for
 import requests
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
@@ -22,7 +22,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 
-toolbar = DebugToolbarExtension(app)
+
 
 connect_db(app)
 db.create_all()
@@ -136,18 +136,35 @@ def page_not_found(e):
 #####################################
 #General user routes:
 
-@app.route('/user/<int:id>', methods=["GET","POST"])
-def show_user(id):
-    """Show user profile"""
+@app.route('/user/<int:id>/favorites', methods=["GET","POST"])
+def favorites(id):
+    """Show user favorites"""
 
     if not g.user:
         flash("You must login first or create an account.", "danger")
         return redirect('/')
 
     user = User.query.get_or_404(id)
-    favorited_recipe = user.favorites
-    
-    return render_template('/user/profile.html', user = user, favorited_recipe = favorited_recipe)
+    favorited_recipes_info = []
+
+    for favorited_recipe in user.favorites:
+        url = f"https://api.spoonacular.com/recipes/{favorited_recipe.recipe_api_id}/information?apiKey={API_KEY}"
+        response = requests.get(url)
+        
+        if response.status_code == 200:
+            data = response.json()
+            recipe_info = {
+                "title": data["title"],
+                "image": data.get("image"),
+                "recipe_api_id": favorited_recipe.recipe_api_id
+            }
+            favorited_recipes_info.append(recipe_info)
+        else:
+            flash('Sorry, we are experiencing some technical difficulties. Please try again later or contact support for assistance.', 'danger')
+            return redirect('/search')
+
+    return render_template('/user/profile.html', user=user, favorited_recipes_info=favorited_recipes_info)
+
 
 #####################################
 # Search bar    
