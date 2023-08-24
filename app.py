@@ -283,7 +283,7 @@ def add_favorite(recipe_api_id):
 
     if not g.user:
         flash("You must login first or create an account.", "danger")
-        return redirect('/')
+        return redirect('/login')
 
     favorited_recipe = Recipe.query.get_or_404(recipe_api_id)
     # filter the user_id and recipe id from UserFavorite table
