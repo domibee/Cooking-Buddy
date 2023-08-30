@@ -1,6 +1,6 @@
 import os 
 
-from flask import Flask, jsonify, render_template, session, g, flash, redirect, request, url_for
+from flask import Flask, render_template, session, g, flash, redirect, request, url_for
 import requests
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
@@ -16,7 +16,7 @@ API_KEY = "ac045d2e287c43db9ee60e514bfa0d9d"
 app = Flask(__name__)
 app.app_context().push()
 app.debug = True
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("postgresql://xuenztuu:Goj43lFEQRqAKCrd22a-fMFlp4x83tcu@mahmud.db.elephantsql.com/xuenztuu")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
