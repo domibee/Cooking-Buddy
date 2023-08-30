@@ -16,7 +16,7 @@ API_KEY = "ac045d2e287c43db9ee60e514bfa0d9d"
 app = Flask(__name__)
 app.app_context().push()
 app.debug = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cookingbuddy'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(“DATABASE_URI”)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
@@ -142,7 +142,7 @@ def favorites(id):
 
     if not g.user:
         flash("You must login first or create an account.", "danger")
-        return redirect('/')
+        return redirect('/user/login')
 
     user = User.query.get_or_404(id)
     favorited_recipes_info = []
@@ -283,7 +283,7 @@ def add_favorite(recipe_api_id):
 
     if not g.user:
         flash("You must login first or create an account.", "danger")
-        return redirect('/login')
+        return redirect('/user/login')
 
     favorited_recipe = Recipe.query.get_or_404(recipe_api_id)
     # filter the user_id and recipe id from UserFavorite table

@@ -171,9 +171,12 @@
   margin: 10px 0;
 }
 .favorite-btn {
-  display: flex;
+  display: block;
   justify-content: left;
 }
+/* .fa-star {
+  line-height: 0;
+} */
 .image-section {
   background-color: #af99ff; /* Change to your desired color */
   margin: 10px 0;
@@ -231,7 +234,6 @@
 }
 
 .checkbox {
-  appearance: none; 
   width: 20px;
   height: 20px;
   margin-right: 5px;
