@@ -4,7 +4,7 @@ Cooking Buddy is a web application that allows users to search for, save, and sh
 
 ## API: [Spoonacular API](https://spoonacular.com/food-api/docs)
 
-## atabase Schema: 
+## Database Schema: 
 
 ![Cooking Buddy Database](https://github.com/domibee/Cooking-Buddy/blob/main/CookingBuddy.png)
 
@@ -13,10 +13,10 @@ Cooking Buddy is a web application that allows users to search for, save, and sh
 ~~~
 $ python3 -m venv venv
 $ source venv/bin/activate
-(venv) $ pip install -r requirements.txt
-(venv) $ pip install pyscopg2-binary
+(venv) $ pip3 install -r requirements.txt
+(venv) $ pip3 install psycopg2-binary
 (venv) $ createdb cookingbdb
-(venv) $ flask run
+(venv) $ python3 -m flask run
 ~~~
 
 The app will be accessible at `http://localhost:5000`.

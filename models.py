@@ -15,8 +15,6 @@ def connect_db(app):
     db.init_app(app)
 
 
-DEFAULT_IMAGE = "/static/default_image.png"
-
 class User(db.Model):
     
     __tablename__ = "users"
@@ -25,7 +23,6 @@ class User(db.Model):
     username = db.Column(db.String(50), unique = True)
     password = db.Column(db.String(100))
     display_name = db.Column(db.String(50))
-    img_url = db.Column(db.String(200), default = DEFAULT_IMAGE)
 
     favorites = db.relationship('Recipe', secondary='user_recipe_favorites', backref='users')
 
