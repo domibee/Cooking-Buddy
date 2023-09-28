@@ -76,7 +76,6 @@ def register():
 
         try: 
             new_user = User.register(display_name = display_name, username = username, password= password)
-            print(new_user)
             db.session.add(new_user)
             db.session.commit()
             flash('Registration successful', 'success')
