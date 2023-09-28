@@ -23,7 +23,13 @@ The app will be accessible at `http://localhost:5000`.
 ### Features: 
 
 - User registration and authentication
+
+![Searching for burgers](https://github.com/domibee/Cooking-Buddy/blob/main/static/favorite-burger.gif)
+
 - Search for recipes using an external API
+
+![Prepare the  ingredients](https://github.com/domibee/Cooking-Buddy/blob/main/static/ingredient-check.gif)
+
 - View detailed recipe information including image, ingredients, and instructions
 - Save and remove recipes to/from favorites list
 
