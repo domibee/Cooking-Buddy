@@ -17,10 +17,12 @@ app = Flask(__name__)
 app.app_context().push()
 app.debug = True
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cookingbuddy'  # uncomment for production 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') 
+app.config['SECRET_KEY'] = os.environ.get['SECRET_KEY' ]
 
 
 
@@ -65,9 +67,6 @@ def register():
     
     If the user already exists with that username: flash message and re-present form"""
 
-    if CURR_USER_KEY in session:
-        del session[CURR_USER_KEY]
-
     form = UserForm()
 
     if form.validate_on_submit():
@@ -77,6 +76,7 @@ def register():
 
         try: 
             new_user = User.register(display_name = display_name, username = username, password= password)
+            print(new_user)
             db.session.add(new_user)
             db.session.commit()
             flash('Registration successful', 'success')
@@ -86,6 +86,7 @@ def register():
         except IntegrityError:
             db.session.rollback()
             flash("Oops! Something went wrong while submitting the form. Please try again or contact support for help.", 'danger')
+            
             return render_template('/user/register.html', form = form)   
     
     else: 
